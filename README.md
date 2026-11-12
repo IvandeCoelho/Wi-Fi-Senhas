@@ -2,19 +2,23 @@
 
 **Visualize, gerencie e organize as redes Wi-Fi salvas no seu computador.**
 
-O **Wi-Fi Senhas** é um aplicativo desenvolvido em Python que permite visualizar e gerenciar redes Wi-Fi, incluindo suas respectivas senhas armazenadas no computador.
+O **Wi-Fi Senhas** é um aplicativo desenvolvido em Python que permite visualizar e gerenciar as redes Wi-Fi salvas no computador, incluindo as respectivas senhas.
 
 Com uma interface gráfica simples e intuitiva, oferece recursos para listar, importar, exportar, conectar, editar e excluir redes Wi-Fi.
 
 ## Funcionalidades
 
-- **Listar redes Wi-Fi:** exibe as redes salvas no computador e suas respectivas senhas.
-- **Identificar status:** informa se a rede está conectada atualmente, salva no computador ou apenas importada.
-- **Conectar à rede:** permite conectar a redes importadas que ainda não estão configuradas no computador.
-- **Editar senhas:** possibilita alterar a senha de redes Wi-Fi.
+- **Listar redes Wi-Fi:** exibe as redes salvas no computador com SSID, senha, tipo de criptografia, status e nível de força da senha.
+- **Identificar status:** informa se a rede está conectada agora, salva no computador ou apenas importada.
+- **Nível de força:** estimativa visual da senha (🔴 fraca, 🟡 média, 🟢 forte), calculada a partir do tamanho e da variedade de caracteres. Serve só como referência.
+- **Buscar e ordenar:** filtro por SSID e ordenação por qualquer coluna, com linhas zebradas.
+- **Conectar às novas redes:** cria o perfil e conecta apenas nas redes importadas que ainda não existem no computador, com barra de progresso.
+- **Editar senhas:** altera a senha de uma rede salva.
 - **Excluir redes:** remove redes Wi-Fi armazenadas no computador.
-- **Exportar listas:** permite salvar as informações das redes para backup ou transferência.
-- **Importar listas:** carrega redes previamente exportadas para facilitar a transferência de configurações.
+- **Exportar listas:** salva as redes em **CSV**, **JSON** ou **TXT**, para backup ou transferência.
+- **Importar listas:** carrega listas exportadas anteriormente (CSV, JSON ou TXT).
+- **Copiar senha:** dois cliques em uma linha copiam a senha para a área de transferência.
+- **Resumo:** cartões com o total de redes, senhas fortes, senhas fracas e redes WPA3.
 
 ## Compatibilidade
 
@@ -24,7 +28,7 @@ Com uma interface gráfica simples e intuitiva, oferece recursos para listar, im
 | Linux               |      ✅      |         ✅          |    ❌    |        ❌        |
 | macOS               |      ✅      |         ✅          |    ❌    |        ❌        |
 
-**Observação:** As funcionalidades de conexão, edição e exclusão estão implementadas somente para Windows. No Linux e macOS, estão disponíveis apenas a listagem, importação e exportação de redes.
+**Observação:** as funcionalidades de conexão, edição e exclusão estão implementadas somente para Windows. No Linux e no macOS estão disponíveis apenas a listagem, a importação e a exportação de redes.
 
 ## Requisitos
 
@@ -33,6 +37,8 @@ Com uma interface gráfica simples e intuitiva, oferece recursos para listar, im
 - Windows 10/11 para utilizar todas as funcionalidades.
 
 Não é necessário instalar bibliotecas adicionais, desde que o Tkinter esteja disponível.
+
+> No Linux, o Tkinter pode ser um pacote separado (por exemplo, `sudo apt install python3-tk`) e a listagem usa o `nmcli` (NetworkManager).
 
 ## Instalação e execução
 
@@ -54,22 +60,41 @@ cd Wi-Fi-Senhas
 python wifi_senhas.py
 ```
 
+## Permissões (administrador)
+
+No Windows, algumas senhas só aparecem, e as ações de conectar, editar e excluir só funcionam de forma confiável, quando o aplicativo roda como administrador. Se ele for aberto sem essa permissão, use o botão **Executar como admin** na tela inicial (o Windows pede a sua confirmação). No Linux pode ser necessário `sudo`, e no macOS o sistema pede a senha de administrador para cada rede lida.
+
+## Formatos de importação e exportação
+
+| Formato | Conteúdo                                              |
+| ------- | ----------------------------------------------------- |
+| CSV     | colunas `Rede`, `Senha`, `Criptografia` (abre no Excel) |
+| JSON    | lista de objetos com `rede`, `senha` e `criptografia`  |
+| TXT     | blocos `Rede:`, `Senha:` e `Criptografia:`             |
+
+## Limitações conhecidas
+
+- Conectar, editar e excluir funcionam apenas no Windows.
+- Ao **conectar** a uma rede importada ou **editar** uma senha, o perfil é recriado assumindo **WPA2-PSK/AES** (ou rede aberta, se a senha estiver vazia). Redes com outro tipo de segurança, como WPA3 ou corporativas, podem não conectar.
+- A conexão só funciona com redes que estejam ao alcance no momento, e o Windows mantém uma rede Wi-Fi por vez. A conexão atual pode cair durante o processo.
+- O nível de força da senha é uma estimativa simples, não uma auditoria de segurança.
+
 ## Segurança e privacidade
 
-O aplicativo permite visualizar informações de autenticação das redes Wi-Fi armazenadas no computador.
+O aplicativo permite visualizar informações de autenticação das redes Wi-Fi armazenadas no computador. Ele funciona 100% localmente, usa apenas utilitários do próprio sistema e **não envia nenhuma senha ou dado de rede para a internet**.
 
 **Utilize exclusivamente no seu próprio computador ou em equipamentos para os quais você tenha autorização.**
 
 - Não utilize o aplicativo para acessar redes sem autorização.
-- Mantenha os arquivos exportados em local seguro.
+- Os arquivos exportados contêm senhas em texto puro: mantenha-os em local seguro e apague quando não precisar mais.
 - Evite compartilhar arquivos que contenham senhas de redes Wi-Fi.
 - Utilize as permissões necessárias para realizar as operações de gerenciamento.
 
 ## Tecnologias utilizadas
 
 - **Python 3:** linguagem de programação.
-- **Tkinter:** desenvolvimento da interface gráfica.
-- **Recursos nativos do sistema operacional:** gerenciamento das configurações de redes Wi-Fi no Windows.
+- **Tkinter:** interface gráfica.
+- **Recursos nativos do sistema operacional:** `netsh` (Windows), `nmcli` (Linux) e `security` (macOS) para ler e gerenciar as configurações de redes Wi-Fi.
 
 ## Contribuição
 
@@ -83,4 +108,4 @@ Este projeto está licenciado sob a licença [MIT](LICENSE).
 
 ---
 
-**Wi-Fi Senhas** — Suas redes Wi-Fi em um só lugar.
+**Wi-Fi Senhas** — Suas redes Wi-Fi em um só lugar
