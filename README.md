@@ -6,6 +6,16 @@ O **Wi-Fi Senhas** é um aplicativo desenvolvido em Python que permite visualiza
 
 Com uma interface gráfica simples e intuitiva, oferece recursos para listar, importar, exportar, conectar, editar e excluir redes Wi-Fi.
 
+
+## Demonstração
+
+Conheça as principais funcionalidades do Wi-Fi Senhas
+
+| Wi-Fi Senhas                                               | 
+| ---------------------------------------------------------- |
+| ![Demonstração do Wi-Fi Senhas](docs/img/demonstração.gif) |
+
+
 ## Funcionalidades
 
 - **Listar redes Wi-Fi:** exibe as redes salvas no computador com SSID, senha, tipo de criptografia, status e nível de força da senha.
